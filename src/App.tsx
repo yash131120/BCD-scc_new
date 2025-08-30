@@ -4,6 +4,9 @@ import { AuthPage } from './components/AuthPage';
 import { AdminPanel } from './components/AdminPanel';
 import { PublicCard } from './components/PublicCard';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { AdminLogin } from './components/AdminLogin';
+import { AdminDashboard } from './components/AdminDashboard';
+import { AdminProtectedRoute } from './components/AdminProtectedRoute';
 import { useAuth } from './hooks/useAuth';
 import HomePage from './components/HomePage';
 
@@ -38,12 +41,22 @@ const AppContent: React.FC = () => {
           user ? <Navigate to="/admin" replace /> : <HomePage />
         } 
       />
-      {/* <Route 
-        path="/auth" 
+      <Route 
+        path="/admin-scc/login" 
+        element={<AdminLogin />} 
+      />
+      <Route
+        path="/admin-scc/dashboard"
         element={
-          user ? <Navigate to="/admin" replace /> : <AuthPage />
-        } 
-      /> */}
+          <AdminProtectedRoute>
+            <AdminDashboard />
+          </AdminProtectedRoute>
+        }
+      />
+      <Route 
+        path="/admin-scc" 
+        element={<Navigate to="/admin-scc/login" replace />} 
+      />
       <Route
         path="/admin"
         element={
